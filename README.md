@@ -1,4 +1,6 @@
-# Course ST0257 C256 3878
+# Curso Sistemas Operativos (ST0257) Semestre: C256 Grupo: 3878
 
-## Session
+## Sesiones
+
+* [Sesión 02](./sessions/session02/README.md)
 
