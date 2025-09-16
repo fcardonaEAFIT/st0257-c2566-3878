@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <semaphore.h>
 
 #define N 10
-#define WAIT_TIME 2
+#define TIME_WAIT 2
 int n = N;
 
 int buffer[N];
@@ -44,8 +45,9 @@ void* consumidor(void *arg) {
     sale = (sale + 1) % N;
     printf("hilo id: %d %d\n", *idHilo, j);
     sem_post(&mutex);
-    sleep(WAIT_TIME);
     sem_post(&vacio);
+
+    sleep((rand() % TIME_WAIT) + 1);
 
   }
   return NULL;
@@ -54,6 +56,8 @@ void* consumidor(void *arg) {
 int
 main(void) {
   create_semaphores();
+
+  srand(time(0));
   pthread_t hilo_prod, hilo_cons;
 
   int* hilo_id = malloc(sizeof(int));
