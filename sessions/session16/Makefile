@@ -18,3 +18,7 @@ fumadores: fumadores.o
 fumadores.o: fumadores.cpp
 	${CXX} -c $<
 
+clean:
+	rm -f *.o
+	rm -f *~
+	rm -f fumadores jardin jardin_limite
