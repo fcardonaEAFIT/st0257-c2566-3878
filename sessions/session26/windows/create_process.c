@@ -35,7 +35,10 @@ int main(int argc, char* argv[], char * env[]) {
     for (int j = 0; j < 10; j++) {
       for (int k = 0; k < BUFFER_SIZE; k++) {
 	buffer[k] = c;
-	c = (c + 1) % ('z' - 'A');
+	c = (c + 1);
+	if (c > 'z') {
+	  c = 'A';
+	}
       }
       DWORD dwWrittenBytes;
       WriteFile(hWritePipe, buffer, BUFFER_SIZE, &dwWrittenBytes, NULL);
