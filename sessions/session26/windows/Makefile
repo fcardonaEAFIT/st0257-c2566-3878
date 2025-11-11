@@ -11,3 +11,9 @@ catw: catw.o
 
 catw.o: catw.c
 	${CC} -c $<
+
+
+clean:
+	rm -f create_process catw
+	rm -f *.o
+	rm -f *~

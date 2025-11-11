@@ -4,6 +4,7 @@
 #define BUFFER_SIZE 1024
 
 char buffer[BUFFER_SIZE];
+void fill_buffer(char *buffer, unsigned int size);
 
 int main(int argc, char* argv[], char * env[]) {
   STARTUPINFO startup_info;
@@ -28,21 +29,23 @@ int main(int argc, char* argv[], char * env[]) {
 
   startup_info.hStdInput = hReadPipe;
 
-  if (CreateProcessA(NULL, "./catw.exe", NULL, NULL,
-		     TRUE, 0, NULL, NULL, &startup_info, &pi_process_info)) {
+  if (CreateProcessA(NULL,
+		     "./catw.exe",
+		     NULL,
+		     NULL,
+		     TRUE,
+		     0,
+		     NULL,
+		     NULL,
+		     &startup_info,
+		     &pi_process_info)) {
 
-    char c = 'A';
     for (int j = 0; j < 10; j++) {
-      for (int k = 0; k < BUFFER_SIZE; k++) {
-	buffer[k] = c;
-	c = (c + 1);
-	if (c > 'z') {
-	  c = 'A';
-	}
-      }
+      fill_buffer(buffer, BUFFER_SIZE);
       DWORD dwWrittenBytes;
       WriteFile(hWritePipe, buffer, BUFFER_SIZE, &dwWrittenBytes, NULL);
     }
+
     CloseHandle(hWritePipe);
     CloseHandle(hReadPipe);
     
@@ -54,4 +57,14 @@ int main(int argc, char* argv[], char * env[]) {
 
   ExitProcess(0);
 }
-			      
+
+void fill_buffer(char *buffer, unsigned int size) {
+  char c = 'A';
+  for (unsigned int i = 0; i < size; i++) {
+    buffer[i] = c;
+    c++;
+    if (c > 'z') {
+      c = 'A';
+    }
+  }
+}
